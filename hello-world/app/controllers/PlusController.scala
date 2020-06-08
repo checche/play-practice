@@ -14,9 +14,12 @@ class PlusController @Inject()(cc: ControllerComponents) extends AbstractControl
   def get(a: Option[String], b: Option[String]) =
     Action {implicit request: Request[AnyContent] =>
       Ok {
-        a
-          .flatMap(x => b.map(y => s"${x.toInt + y.toInt}"))
-          .getOrElse("""Please give arguments of a and b.""")
+        try {
+          a
+            .flatMap(x => b.map(y => s"${x.toInt + y.toInt}"))
+            .getOrElse("""Please give arguments of a and b.""")
+        } catch {case e:NumberFormatException =>
+          """Please input number"""}
       }
     }
 }
