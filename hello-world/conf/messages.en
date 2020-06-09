@@ -1,0 +1,5 @@
+hello = Hello, {0}!
+noQuery = Please give a name as a query parameter named "name".
+add = {0} + {1} = {2}
+noNumber = Please give arguments of a and b.
+invalidNumber = Please input number
