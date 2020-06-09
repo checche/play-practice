@@ -12,8 +12,11 @@ import play.api.mvc.Request
 @Singleton
 class HelloController @Inject()(cc: ControllerComponents) extends AbstractController(cc) with I18nSupport {
 
+  val logger = play.api.Logger("hello")
+
   def get(name: Option[String]) =
     Action {implicit request: Request[AnyContent] =>
+      logger.info(s"name parameter: $name")
       Ok {
         name
           .map(s => Messages("hello", s))
