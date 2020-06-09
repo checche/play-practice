@@ -12,8 +12,11 @@ import play.api.mvc.Request
 @Singleton
 class PlusController @Inject()(cc: ControllerComponents) extends AbstractController(cc) with I18nSupport {
 
+  val logger = play.api.Logger("plus")
+
   def get(a: Option[String], b: Option[String]) =
     Action {implicit request: Request[AnyContent] =>
+      logger.info(s"a: $a, b: $b")
       Ok {
         try {
           a

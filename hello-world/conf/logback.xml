@@ -26,6 +26,10 @@
         <appender-ref ref="FILE" />
     </logger>
 
+    <logger name="plus" level="DEBUG">
+        <appender-ref ref="FILE" />
+    </logger>
+
     <logger name="com.gargoylesoftware.htmlunit.javascript" level="OFF" />
 
     <root level="WARN">
