@@ -1,26 +1,19 @@
 import org.scalatestplus.play._
+import org.scalatestplus.play.guice.GuiceOneServerPerSuite
 import org.scalatestplus.play.guice.GuiceOneServerPerTest
 import play.api.mvc._
 import play.api.inject.guice._
 import play.api.routing._
 import play.api.routing.sird._
 
-class TextboardSpec
-  extends PlaySpec
-  with GuiceOneServerPerTest
-  with OneBrowserPerSuite
-  with HtmlUnitFactory {
+class TextboardSpec extends PlaySpec with GuiceOneServerPerTest with OneBrowserPerSuite with HtmlUnitFactory {
 
-  import org.openqa.selenium.htmlunit.HtmlUnitDriver
-
-  override def createWebDriver() = {
-    val driver = new HtmlUnitDriver {
-      def setAcceptLanguage(lang: String) =
-        this.getWebClient().addRequestHeader("Accept-Language", lang)
-    }
-    driver.setAcceptLanguage("en")
-    driver
-  }
+  override def fakeApplication() =
+    new GuiceApplicationBuilder()
+      .configure(
+        "db.default.driver" -> "org.h2.Driver",
+        "db.default.url" -> "jdbc:h2:mem:test;MODE=MYSQL")
+      .build()
 
   "GET /" should {
     "何も投稿しない場合はメッセージを表示しない" in {
@@ -40,21 +33,9 @@ class TextboardSpec
 
       eventually {
         val posts = findAll(className("post-body")).toSeq
-        println(posts)
         assert(posts.length === 1)
         assert(posts(0).text === body)
         assert(findAll(cssSelector("p#error")).length === 0)
-      }
-    }
-  }
-
-  "POST /" should {
-    "投稿したものが表示される その2" in {
-      go to s"http://localhost:$port/"
-
-      eventually {
-        val posts = findAll(className("post-body")).toSeq
-        assert(posts.length === 1)
       }
     }
 
