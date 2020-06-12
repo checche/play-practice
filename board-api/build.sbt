@@ -2,6 +2,8 @@ lazy val root = (project in file(".")).enablePlugins(PlayScala)
 
 scalaVersion := "2.13.2"
 
+name := "day4-board-json"
+
 val scalikejdbcVersion = "3.4.2"
 
 //libraryDependencies ++= Seq(
@@ -13,6 +15,7 @@ libraryDependencies ++= Seq(
   guice,
   jdbc,
   evolutions,
+  filters,
   "com.h2database"         %  "h2"                           % "1.4.200",
   "org.scalikejdbc"        %% "scalikejdbc"                  % scalikejdbcVersion,
   "org.scalikejdbc"        %% "scalikejdbc-config"           % scalikejdbcVersion,
